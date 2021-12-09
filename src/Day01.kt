@@ -41,16 +41,20 @@ fun main() {
         return depthIncreases
     }
 
+    // Change these for each day
+    val day: String = "01"
+    val testPart1Res = 7
+    val testPart2Res = 5
+
     // test if implementation meets criteria from the description, like:
-    val testInput = readInput("Day01_test")
+    val testInput = readInput("Day${day}_test")
     val TestRes = part1(testInput)
-    println("Test result: $TestRes")
-    check(TestRes == 7){"Test for part 1 returned $TestRes, expected 7"}
+    check(TestRes == testPart1Res){"Test for part 1 returned $TestRes, expected $testPart1Res"}
 
     val TestResPart2 = part2(testInput)
-    check(TestResPart2 == 5){"Test for part 2 returned $TestRes, expected 5"}
+    check(TestResPart2 == testPart2Res){"Test for part 2 returned $TestRes, expected $testPart2Res"}
 
-    val input = readInput("Day01")
-    println(part1(input))
-    println(part2(input))
+    val input = readInput("Day${day}")
+    println("Part 1 result: ${part1(input)}")
+    println("Part 2 result: ${part2(input)}")
 }
