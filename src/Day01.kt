@@ -45,10 +45,10 @@ fun main() {
     val testInput = readInput("Day01_test")
     val TestRes = part1(testInput)
     println("Test result: $TestRes")
-    check(TestRes == 7)
+    check(TestRes == 7){"Test for part 1 returned $TestRes, expected 7"}
 
     val TestResPart2 = part2(testInput)
-    check(TestResPart2 == 5)
+    check(TestResPart2 == 5){"Test for part 2 returned $TestRes, expected 5"}
 
     val input = readInput("Day01")
     println(part1(input))
