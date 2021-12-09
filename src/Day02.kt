@@ -17,7 +17,7 @@ fun main() {
     }
 
     fun part2(input: List<String>): Int {
-        var horiz_pos = 0
+        var horizPos = 0
         var depth = 0
         var aim = 0
 
@@ -26,7 +26,7 @@ fun main() {
             val magnitude = command.split(" ")[1].toInt()
             when (dir){
                 "forward" -> {
-                    horiz_pos += magnitude
+                    horizPos += magnitude
                     depth += aim * magnitude
                 }
                 "up" -> aim -= magnitude
@@ -34,7 +34,7 @@ fun main() {
                 else -> println("Error, we got a direction: $dir")
             }
         }
-        return horiz_pos * depth
+        return horizPos * depth
     }
 
     // Change these for each day
