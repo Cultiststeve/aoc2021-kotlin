@@ -70,13 +70,77 @@ fun main() {
     }
 
         fun part2(input: List<String>): Long {
-            return -1
+            var inputGrid: MutableList<MutableList<Int>> =
+                input.map { it.map { it.digitToInt() }.toMutableList() }.toMutableList()
+
+            val steps = 100
+            var totalFlashes = 0
+
+            val totalSize = inputGrid.size * inputGrid[0].size
+
+            printGrid(inputGrid)
+
+            var i = 0
+            while (true){
+                var stepFlashes = 0
+                i += 1
+                // Initial increase
+                inputGrid = inputGrid.map { it.map { it + 1 }.toMutableList() }.toMutableList()
+
+                var flashedCordinates = mutableListOf<Pair<Int, Int>>()
+
+                // Work out which ones flash
+                var flashReady = true
+                while (flashReady) {
+                    flashReady = false  // Assume we are done unless we find a 9
+                    for ((y, row) in inputGrid.withIndex()) {
+                        for ((x, spotValue) in row.withIndex()) {
+                            if (Pair(x, y) in flashedCordinates){
+                                continue
+                            }
+                            if (spotValue > 9) {
+                                for (xmod in -1..1) {
+                                    if ((x+xmod >= inputGrid.size) or (x+xmod < 0)){
+                                        continue
+                                    }
+                                    for (ymod in -1..1) {
+                                        if ((y+ymod >= inputGrid.size) or (y+ymod < 0)){
+                                            continue
+                                        }
+                                        inputGrid[y + ymod][x + xmod] += 1
+                                    }
+                                }
+                                totalFlashes += 1
+                                stepFlashes += 1
+                                inputGrid[y][x] += 1 // Show this one has flashed
+                                flashReady = true
+                                flashedCordinates.add(Pair(x,y))
+                            }
+                        }
+                    } // End for y row
+                }// End while flashReady
+                // Once all have flashed in a step
+                // Finally, each flashed octopus resets to 0
+                for ((y, row) in inputGrid.withIndex()){
+                    for ((x, squid) in row.withIndex()){
+                        if (squid > 9){
+                            inputGrid[y][x] = 0
+                        }
+                    }
+                }
+                println("On steps $i")
+                printGrid(inputGrid)
+                if (stepFlashes == totalSize){
+                    return i.toLong()
+                }
+            } // end while not sync'd
+
         }
 
         // Change these for each day
         val day: String = "11"
         val testPart1Expected: Long = 1656
-        val testPart2Expected: Long = 61229
+        val testPart2Expected: Long = 195
 
 
         // test if implementation meets criteria from the description, like:
@@ -90,7 +154,7 @@ fun main() {
 //    val testResSmallPart2 = part2(smallTestInput)
 //    check(testResSmallPart2.toInt() == 5353)
 
-//    val testResPart2 = part2(testInput)
-//    check(testResPart2.toLong() == testPart2Expected){"Test for part 2 returned $testResPart2, expected $testPart2Expected"}
-//    println("Part 2 result: ${part2(input)}")
+    val testResPart2 = part2(testInput)
+    check(testResPart2.toLong() == testPart2Expected){"Test for part 2 returned $testResPart2, expected $testPart2Expected"}
+    println("Part 2 result: ${part2(input)}")
     }
